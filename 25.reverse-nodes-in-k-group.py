@@ -13,7 +13,13 @@
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], 
                       k: int) -> Optional[ListNode]:
-        
+        dummy = ListNode(0)
+        dummy.next = head
+        previous = head
+        current = previous.next
+        while current:
+            for i in range(k):
+
         
 # @lc code=end
 
