@@ -5,37 +5,38 @@
 #
 
 # @lc code=start
+
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         if not s:
             return ""
         
         start = 0
-        max_length = 1
+        max_len = 1
         
-        # Helper function to expand around center
-        def expand_around_center(s, left, right):
+        def expand_around_center(left: int, right: int) -> int:
+            """Expand around center and return length of palindrome"""
             while left >= 0 and right < len(s) and s[left] == s[right]:
                 left -= 1
                 right += 1
             return right - left - 1  # Length of palindrome
         
         for i in range(len(s)):
-            # Expand for odd-length palindromes (like "aba")
-            len1 = expand_around_center(s, i, i)
-            # Expand for even-length palindromes (like "abba")
-            len2 = expand_around_center(s, i, i + 1)
+            # Case 1: Odd length palindromes (center at i)
+            len1 = expand_around_center(i, i)
             
-            # Get the maximum length from the two expansions
-            length = max(len1, len2)
+            # Case 2: Even length palindromes (center between i and i+1)
+            len2 = expand_around_center(i, i + 1)
             
-            # Update the longest palindrome if a longer one is found
-            if length > max_length:
-                max_length = length
-                # Calculate the starting position of the palindrome
-                start = i - (length - 1) // 2
+            # Get the maximum length from both cases
+            current_max = max(len1, len2)
+            
+            # Update global maximum if current is longer
+            if current_max > max_len:
+                max_len = current_max
+                # Calculate start position based on center and length
+                start = i - (current_max - 1) // 2
         
-        return s[start:start + max_length]
-        
+        return s[start:start + max_len]
 # @lc code=end
 
