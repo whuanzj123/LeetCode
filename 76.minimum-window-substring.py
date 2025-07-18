@@ -15,29 +15,36 @@ class Solution:
         left = 0
         right = 0
         valid = 0
-
-        while right <= len(s)-1 and valid < len(t):
+        length = float('inf')
+        while right <= len(s)-1:
             move = s[right]
-
             if move in t:
                 window[move] = window.get(move,0)+1
 
                 if window[move] == need[move]:
                     valid += 1
+
+            while valid == len(need):
+                out = s[left]
+                if out in t:
+                    window[out] = window.get(out) - 1
+                    if window[out] < need[out]:
+                        valid -= 1
+                left += 1
+                if right - (left-1) < length:
+                    start = left -1
+                    end = right
+                    length = right - (left-1)
+            
             right += 1
 
-        if valid < len(t):
+        if length == float('inf'):
             return ""
-        
-        while True:
-            out = s[left]
+        return s[start:end+1]
+            
 
-            if out in t:
-                window[move] = window.get(move) - 1
 
-                if window[move] < need[move]:
-                    return s[left:right+1]
-        
+            
 
             
 
