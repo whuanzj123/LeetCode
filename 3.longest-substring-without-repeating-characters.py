@@ -9,19 +9,19 @@ class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         left = 0 
         right = 0
-        length = float('inf')
-        while right <= len(s)-1:
-            right += 1
-            move = s[right]
-            if move not in s[left:right]:
-                if right - left + 1 < length:
-                    length = right - left + 1
+        length = 0
 
-            while s[right] in s[left:right]:
-                out = s[left]
+        while right <= len(s)-1:
+            move = s[right]
+            right += 1
+
+            while move in s[left:right-1]:
                 left += 1
 
-            return length
+            if right - left > length:
+                length = right - left
+        
+        return length
             
 
 # @lc code=end
